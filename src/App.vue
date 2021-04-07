@@ -1,26 +1,33 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+	<router-view />
+	<main v-if="!(this.$route.href === '/slayer')">
+		<Navigation />
+		<Main />
+		<MyFooter />
+	</main>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+	import Main from "./components/Main.vue";
+	import Navigation from "./components/Navigation.vue";
+	import MyFooter from "./components/MyFooter.vue";
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+	export default {
+		name: "App",
+
+		components: {
+			Main,
+			Navigation,
+			MyFooter,
+		},
+	};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+	body {
+		margin: 0;
+		background-color: #163e50;
+		color: white;
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	}
 </style>
