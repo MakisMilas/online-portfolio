@@ -7,9 +7,11 @@ import VueSmoothScroll from "vue3-smooth-scroll";
 import BaseCard from "./components/UI/BaseCard.vue";
 import BaseTitle from "./components/UI/BaseTitle.vue";
 import BaseButton from "./components/UI/BaseButton.vue";
+import MyFooter from "./components/MyFooter.vue";
 import Index from "./components/Index.vue";
 
 import Slayer from "./Slayer/App.vue";
+import Calculator from "./components/Calculator.vue";
 const BaseDialog = defineAsyncComponent(() => import("./components/UI/BaseDialog.vue"));
 
 const router = createRouter({
@@ -26,12 +28,17 @@ const router = createRouter({
 			component: Slayer,
 		},
 		{
+			path: "/calculator",
+			name: "calculator",
+			component: Calculator,
+		},
+		{
 			path: "/:notFound(.*)",
 			redirect: "/",
 		},
 	],
 	scrollBehavior(to) {
-		if (to.path === "/slayer") return { left: 0, top: 0 };
+		if (to.path !== "/") return { left: 0, top: 0 };
 	},
 });
 
@@ -46,6 +53,8 @@ app.component("base-title", BaseTitle);
 app.component("base-button", BaseButton);
 app.component("base-dialog", BaseDialog);
 app.component("index", Index);
+app.component("MyFooter", MyFooter);
+app.component("calculator", Calculator);
 
 app.use(router);
 

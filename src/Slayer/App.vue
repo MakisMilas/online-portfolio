@@ -3,7 +3,7 @@
 		<h1>Monster Slayer</h1>
 	</header>
 	<section>
-		<base-button class="go_back">
+		<base-button>
 			<router-link to="/">Go Back</router-link>
 		</base-button>
 		<base-card>
@@ -104,6 +104,7 @@
 			</ul>
 		</section>
 	</div>
+	<MyFooter />
 </template>
 
 <script>
@@ -265,7 +266,6 @@
 	}
 
 	section {
-		width: 100%;
 		max-width: 40rem;
 		margin: auto;
 	}
@@ -392,6 +392,7 @@
 	.card {
 		text-align: justify;
 		padding-bottom: 40px;
+		margin-top: 3rem;
 	}
 
 	.card section {
@@ -414,11 +415,6 @@
 	}
 	.desc p {
 		margin: 0;
-	}
-	.go_back {
-		margin-bottom: 3rem;
-		display: flex;
-		justify-content: flex-end;
 	}
 
 	a {

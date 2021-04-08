@@ -1,6 +1,6 @@
 <template>
 	<router-view />
-	<main v-if="!(this.$route.href === '/slayer')">
+	<main v-if="checkPath">
 		<Navigation />
 		<Main />
 		<MyFooter />
@@ -10,7 +10,6 @@
 <script>
 	import Main from "./components/Main.vue";
 	import Navigation from "./components/Navigation.vue";
-	import MyFooter from "./components/MyFooter.vue";
 
 	export default {
 		name: "App",
@@ -18,7 +17,14 @@
 		components: {
 			Main,
 			Navigation,
-			MyFooter,
+		},
+		created() {
+			console.log(this.$route);
+		},
+		computed: {
+			checkPath() {
+				return this.$route.path === "/";
+			},
 		},
 	};
 </script>

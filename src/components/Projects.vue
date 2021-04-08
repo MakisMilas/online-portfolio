@@ -43,6 +43,14 @@
 						description: "A player versus computer game built in Vue 3, utilising Flexbox and Vue router.",
 					},
 					{
+						type: "internal",
+						title: "Calculator",
+						picture:
+							"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVYlx0jD8aFQ-RC9nN_xetzVKET_Dah1br_g&usqp=CAU",
+						link: "/calculator",
+						description: "A simple calculator with HTML, CSS and Javascript.",
+					},
+					{
 						type: "external",
 						title: "M.Sc. Thesis",
 						picture:
