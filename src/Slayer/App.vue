@@ -266,6 +266,7 @@
 	}
 
 	section {
+		width: 100%;
 		max-width: 40rem;
 		margin: auto;
 	}
