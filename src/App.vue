@@ -18,9 +18,6 @@
 			Main,
 			Navigation,
 		},
-		created() {
-			console.log(this.$route);
-		},
 		computed: {
 			checkPath() {
 				return this.$route.path === "/";

@@ -52,7 +52,7 @@
 					name="message"
 					v-model.trim="message.val"
 					id="message"
-					rows="10"
+					rows="8"
 					placeholder="Your message..."
 					@blur="checkValidity('message')"
 				/>

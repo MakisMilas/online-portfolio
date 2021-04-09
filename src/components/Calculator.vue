@@ -10,29 +10,29 @@
 			<input type="text" class="calculator-screen" value="0" disabled />
 
 			<div class="calculator-keys">
-				<button type="button" class="operator" value="+">+</button>
-				<button type="button" class="operator" value="-">-</button>
-				<button type="button" class="operator" value="*">&times;</button>
-				<button type="button" class="operator" value="/">&divide;</button>
+				<button type="button" class="operator" value="+" @click="handleOperator('+')">+</button>
+				<button type="button" class="operator" value="-" @click="handleOperator('-')">-</button>
+				<button type="button" class="operator" value="*" @click="handleOperator('*')">&times;</button>
+				<button type="button" class="operator" value="/" @click="handleOperator('/')">&divide;</button>
 
-				<button type="button" value="7">7</button>
-				<button type="button" value="8">8</button>
-				<button type="button" value="9">9</button>
+				<button type="button" value="7" @click="inputDigit('7')">7</button>
+				<button type="button" value="8" @click="inputDigit('8')">8</button>
+				<button type="button" value="9" @click="inputDigit('9')">9</button>
 
-				<button type="button" value="4">4</button>
-				<button type="button" value="5">5</button>
-				<button type="button" value="6">6</button>
+				<button type="button" value="4" @click="inputDigit('4')">4</button>
+				<button type="button" value="5" @click="inputDigit('5')">5</button>
+				<button type="button" value="6" @click="inputDigit('6')">6</button>
 
-				<button type="button" value="1">1</button>
-				<button type="button" value="2">2</button>
-				<button type="button" value="3">3</button>
+				<button type="button" value="1" @click="inputDigit('1')">1</button>
+				<button type="button" value="2" @click="inputDigit('2')">2</button>
+				<button type="button" value="3" @click="inputDigit('3')">3</button>
 
-				<button type="button" class="decimal" value=".">.</button>
-				<button type="button" value="0">0</button>
+				<button type="button" class="decimal" value="." @click="inputDecimal('.')">.</button>
+				<button type="button" value="0" @click="inputDigit('0')">0</button>
 
-				<button type="button" class="all-clear" value="all-clear">AC</button>
+				<button type="button" class="all-clear" value="all-clear" @click="resetCalculator">AC</button>
 
-				<button type="button" class="equal-sign" value="=">=</button>
+				<button type="button" class="equal-sign" value="=" @click="handleOperator('=')">=</button>
 			</div>
 		</div>
 	</section>
@@ -40,14 +40,88 @@
 </template>
 
 <script>
-	import MyFooter from "./MyFooter.vue";
 	export default {
-		components: {
-			MyFooter,
+		data() {
+			return {
+				calculator: {
+					displayValue: "0",
+					firstOperand: null,
+					waitingForSecondOperand: false,
+					operator: null,
+				},
+			};
 		},
 		methods: {
-			buttonClicked() {
-				console.log("test");
+			updateDisplay() {
+				const display = document.querySelector(".calculator-screen");
+				display.value = this.calculator.displayValue;
+			},
+			inputDigit(digit) {
+				const { displayValue, waitingForSecondOperand } = this.calculator;
+				if (waitingForSecondOperand === true) {
+					this.calculator.displayValue = digit;
+					this.calculator.waitingForSecondOperand = false;
+				} else {
+					this.calculator.displayValue = displayValue === "0" ? digit : displayValue + digit;
+				}
+				this.updateDisplay();
+			},
+			inputDecimal(dot) {
+				if (this.calculator.waitingForSecondOperand === true) {
+					this.calculator.displayValue = "0.";
+					this.calculator.waitingForSecondOperand = false;
+					return;
+				}
+				if (!this.calculator.displayValue.includes(dot)) {
+					this.calculator.displayValue += dot;
+					this.updateDisplay();
+				}
+			},
+
+			handleOperator(nextOperator) {
+				const { firstOperand, displayValue, operator } = this.calculator;
+
+				const inputValue = parseFloat(displayValue);
+				if (nextOperator && this.calculator.waitingForSecondOperand) {
+					this.calculator.operator = nextOperator;
+					return;
+				}
+
+				if (firstOperand === null && !isNaN(inputValue)) {
+					this.calculator.firstOperand = inputValue;
+				} else if (operator) {
+					this.calculator.operator = nextOperator;
+
+					const result = this.calculate(firstOperand, inputValue, operator);
+					this.calculator.displayValue = `${parseFloat(result.toFixed(7))}`;
+
+					this.calculator.firstOperand = result;
+					this.updateDisplay();
+				}
+
+				this.calculator.waitingForSecondOperand = true;
+				this.calculator.operator = nextOperator;
+			},
+
+			calculate(firstOperand, secondOperand, operator) {
+				if (operator === "+") {
+					return firstOperand + secondOperand;
+				} else if (operator === "-") {
+					return firstOperand - secondOperand;
+				} else if (operator === "*") {
+					return firstOperand * secondOperand;
+				} else if (operator === "/") {
+					return firstOperand / secondOperand;
+				}
+
+				return secondOperand;
+			},
+			resetCalculator() {
+				this.calculator.displayValue = "0";
+				this.calculator.firstOperand = null;
+				this.calculator.waitingForSecondOperand = false;
+				this.calculator.operator = null;
+				this.updateDisplay();
 			},
 		},
 	};
@@ -106,6 +180,8 @@
 			inset 0 -1px 0 0 rgba(255, 255, 255, 0.15), 0 1px 0 0 rgba(255, 255, 255, 0.15);
 		text-shadow: 0 1px rgba(255, 255, 255, 0.4);
 		transition: all 0.2s linear;
+		cursor: pointer;
+		outline: none;
 	}
 
 	button:hover {
