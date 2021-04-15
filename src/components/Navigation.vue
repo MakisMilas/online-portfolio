@@ -23,7 +23,7 @@
 					{ title: "About", to: "#aboutMe" },
 					{ title: "Projects", to: "#myProjects" },
 					{ title: "Contact", to: "#contactForm" },
-					{ link: "devicon-linkedin-plain", to: "https://www.linkedin.com/in/chrysostomos-makis-milas-60224055/" },
+					{ link: "devicon-linkedin-plain", to: "https://www.linkedin.com/in/makis-milas/" },
 				],
 			};
 		},
